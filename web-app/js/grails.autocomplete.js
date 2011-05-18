@@ -16,6 +16,7 @@
 		return this.each(function() {
 			var select = $(this);
 			var selectId = select.attr('id');
+			var minItems = select.data('min-size');
 		
 			// create an autocomplete element to proxy the select
 			var autocompleter = $('<input id="' + selectId + '-autocompleter" type="search">').autocomplete({
@@ -73,8 +74,19 @@
 						newItem.hide().appendTo(selectedList).slideDown(speed);
 					}
 				});
+				checkListLength();
 			}
-					
+
+			// list items should only be removeable if they are more than minSize constraint
+			function checkListLength() {
+				numItems = $('option:selected', select).length;
+				if (numItems <= minItems) {
+					$('.autocomplete-remove-selection').hide();
+				} else {
+					$('.autocomplete-remove-selection').show();
+				}
+			}
+
 			// whenever selection changes update the selected list
 			select.bind('change', updateSelection);
 		

@@ -113,6 +113,9 @@
 		if (isRequired()) sb << ' required=""'
  		sb << ' value="${' << "${domainInstance}?.${property.name}" << '*.id}"'
  		sb << ' class="many-to-many"'
+ 		if (cp.minSize) {
+ 		    sb << ' data-min-size="${' << "${domainInstance}.constraints.${property.name}.minSize" << '}"'
+ 		}
  		sb << '/>'
 		sb as String
     }

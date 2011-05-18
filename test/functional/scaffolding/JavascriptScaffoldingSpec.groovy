@@ -84,6 +84,21 @@ class JavascriptScaffoldingSpec extends GebSpec {
 
 		then:
 		at BookEditPage
+		removeAuthorLinks.displayed == false
+	}
+
+	def "make sure that minSize on authors is considered"() {
+		when:
+		autocomplete(book.authors(), "Bruce Sterling")
+
+		then:
+		removeAuthorLinks.displayed == true
+
+		when:
+		removeAuthorLinks[1].click()
+
+		then:
+		removeAuthorLinks.displayed == false
 	}
 
 	def "edit book"() {
@@ -102,7 +117,7 @@ class JavascriptScaffoldingSpec extends GebSpec {
 
 	def "delete book"() {
 		when:
-		deleteButton.click()
+		withConfirm(true) { deleteButton.click() }
 
 		then:
 		at BookListPage

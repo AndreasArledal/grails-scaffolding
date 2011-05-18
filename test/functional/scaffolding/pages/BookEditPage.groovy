@@ -9,6 +9,7 @@ class BookEditPage extends Page {
 	static at = { title == "Edit Book" }
 	static content = {
 		book { $("form") }
+		removeAuthorLinks { $(".autocomplete-remove-selection") }
 		updateButton(to: BookShowPage) { $("input.save") }
 		deleteButton(to: BookListPage) { $("input.delete") }
 		errors(required: false) { $(".errors li")*.text() }
